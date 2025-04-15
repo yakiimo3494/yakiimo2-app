@@ -1,1 +1,0 @@
-// 便利関数 placeholder
