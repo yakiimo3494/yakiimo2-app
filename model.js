@@ -5,9 +5,7 @@ async function loadModel() {
 loadModel();
 
 async function predictSales(input) {
-  if (!model) {
-    await loadModel();
-  }
+  if (!model) await loadModel();
   const tensor = tf.tensor2d([input]);
   const prediction = model.predict(tensor);
   const result = await prediction.data();

@@ -9,41 +9,19 @@ document.getElementById('sales-form').addEventListener('submit', async function 
   navigator.geolocation.getCurrentPosition(async (pos) => {
     const latitude = pos.coords.latitude;
     const longitude = pos.coords.longitude;
-    initMap(latitude, longitude);
+    const payload = { product, quantity, amount, gender, latitude, longitude, timestamp: new Date().toISOString() };
 
-    const weatherRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY}&units=metric`);
-    const weatherData = await weatherRes.json();
-    const temperature = weatherData.main.temp;
-
-    const hour = new Date().getHours();
-    const weekday = new Date().getDay();
-    const location_sales_count = Math.floor(Math.random() * 10);
-
-    // 売上予測
-    const input = [temperature, hour, weekday];
-    const predicted = await predictSales(input);
-    document.getElementById('prediction').textContent = `📈 予測売上数：${predicted}個`;
-
-    const payload = {
-      product, quantity, amount, gender,
-      latitude, longitude, temperature, location_sales_count
-    };
-
-    const res = await fetch(GOOGLE_SHEETS_WEBAPP_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "text/plain"
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (res.ok) {
+    try {
+      await fetch(GOOGLE_SHEETS_WEBAPP_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+        mode: "no-cors"
+      });
       document.getElementById('status').textContent = "✅ 記録完了！";
       form.reset();
-    } else {
-      document.getElementById('status').textContent = "⚠️ 記録に失敗しました";
+    } catch (error) {
+      document.getElementById('status').textContent = "⚠️ 記録失敗：" + error.message;
     }
-  }, () => {
-    document.getElementById('status').textContent = "⚠️ 位置情報が取得できません";
   });
 });
