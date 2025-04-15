@@ -1,1 +1,1 @@
-const GOOGLE_SHEETS_WEBAPP_URL = 'your_webapp_url_here';
+const GOOGLE_SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbweCrmLoLVWdYHYF3WP0O2L7BGtELb_-DpogmvI-Q4BVLiIfNH7Tpo50uN3AdyE0oTBcw/exec';
