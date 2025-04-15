@@ -1,0 +1,1 @@
+{"modelTopology": {"class_name": "Sequential", "config": [{"class_name": "Dense", "config": {"units": 8, "activation": "relu", "inputShape": [3]}}, {"class_name": "Dense", "config": {"units": 1, "activation": "linear"}}]}, "format": "layers-model", "generatedBy": "dummy", "convertedBy": "ChatGPT"}

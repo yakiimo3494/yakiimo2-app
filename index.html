@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><title>焼き芋販売記録</title></head>
+<body>
+  <h1>販売記録フォーム</h1>
+  <form id="sales-form">
+    <label>商品: <select name="product">
+      <option value="M">Mサイズ</option><option value="L">Lサイズ</option><option value="Set">セット</option></select></label><br>
+    <label>個数: <input type="number" name="quantity" required></label><br>
+    <label>金額: <input type="number" name="amount" required></label><br>
+    <label>性別: <select name="gender">
+      <option value="男性">男性</option><option value="女性">女性</option></select></label><br>
+    <button type="submit">記録</button>
+  </form>
+  <div id="status"></div>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body></html>
