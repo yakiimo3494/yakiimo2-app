@@ -1,1 +1,0 @@
-# yakiimo2-app
