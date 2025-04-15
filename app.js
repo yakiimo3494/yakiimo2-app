@@ -32,7 +32,7 @@ document.getElementById('sales-form').addEventListener('submit', async function 
     const res = await fetch(GOOGLE_SHEETS_WEBAPP_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "text/plain"
       },
       body: JSON.stringify(payload)
     });
