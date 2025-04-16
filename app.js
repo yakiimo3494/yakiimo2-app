@@ -34,7 +34,8 @@ document.getElementById('sales-form').addEventListener('submit', async function 
       headers: {
         "Content-Type": "text/plain"
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+    mode: "no-cors"
     });
 
     if (res.ok) {
