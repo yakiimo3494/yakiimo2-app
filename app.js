@@ -38,8 +38,7 @@ document.getElementById('sales-form').addEventListener('submit', async function 
     mode: "no-cors"
     });
 
-    if (res.ok) {
-      document.getElementById('status').textContent = "✅ 記録完了！";
+          document.getElementById('status').textContent = "✅ 記録完了！";
       document.getElementById('status').textContent = "✅ 記録送信しました（スプレッドシートで確認）";
   form.reset();
     } else {
