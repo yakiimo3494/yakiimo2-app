@@ -40,7 +40,8 @@ document.getElementById('sales-form').addEventListener('submit', async function 
 
     if (res.ok) {
       document.getElementById('status').textContent = "✅ 記録完了！";
-      form.reset();
+      document.getElementById('status').textContent = "✅ 記録送信しました（スプレッドシートで確認）";
+  form.reset();
     } else {
       document.getElementById('status').textContent = "⚠️ 記録に失敗しました";
     }
