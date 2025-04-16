@@ -6,7 +6,7 @@ async function loadMap() {
 
   const res = await fetch("data/record.csv");
   const text = await res.text();
-  const rows = text.trim().split("\n").slice(1); // skip header
+  const rows = text.trim().split("\n").slice(1);
 
   rows.forEach(row => {
     const cols = row.split(",");
@@ -17,13 +17,8 @@ async function loadMap() {
     const temp = cols[7];
     const count = cols[8];
     if (!isNaN(lat) && !isNaN(lon)) {
-      const popupText = `
-        <b>商品:</b> ${product}<br>
-        <b>個数:</b> ${quantity}<br>
-        <b>気温:</b> ${temp ?? "不明"} ℃<br>
-        <b>販売回数:</b> ${count ?? "?"}
-      `;
-      L.marker([lat, lon]).addTo(map).bindPopup(popupText);
+      const popup = `<b>商品:</b> ${product}<br><b>個数:</b> ${quantity}<br><b>気温:</b> ${temp ?? "?"} ℃<br><b>販売回数:</b> ${count ?? "?"}`;
+      L.marker([lat, lon]).addTo(map).bindPopup(popup);
     }
   });
 }

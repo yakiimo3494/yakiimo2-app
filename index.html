@@ -2,16 +2,32 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>販売記録マップ</title>
+  <title>販売記録＋地図表示</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    body { margin: 0; font-family: sans-serif; }
-    #map { height: 100vh; }
+    body { font-family: sans-serif; margin: 0; padding: 1em; }
+    form { margin-bottom: 1em; }
+    #map { height: 70vh; width: 100%; }
   </style>
 </head>
 <body>
+  <h2>販売記録フォーム</h2>
+  <form id="sales-form">
+    商品: <select name="product"><option value="M">M</option><option value="L">L</option><option value="Set">Set</option></select><br>
+    個数: <input type="number" name="quantity" required><br>
+    金額: <input type="number" name="amount" required><br>
+    性別: <select name="gender"><option value="男性">男性</option><option value="女性">女性</option></select><br>
+    <button type="submit">記録</button>
+  </form>
+  <div id="status"></div>
+
+  <h2>販売記録マップ</h2>
   <div id="map"></div>
+
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="config.js"></script>
+  <script src="utils.js"></script>
+  <script src="app.js"></script>
   <script src="map.js"></script>
 </body>
 </html>

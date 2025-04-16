@@ -10,30 +10,32 @@ document.getElementById('sales-form').addEventListener('submit', async function 
     const latitude = pos.coords.latitude;
     const longitude = pos.coords.longitude;
 
-    // 🌡 OpenWeatherMapで気温取得
-    const weatherRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY}&units=metric`);
-    const weatherData = await weatherRes.json();
-    const temperature = weatherData.main.temp;
-
-    const payload = {
-      product, quantity, amount, gender,
-      latitude, longitude, temperature,
-      timestamp: new Date().toISOString()
-    };
-
+    // 気温取得
+    let temperature = null;
     try {
-      await fetch(GOOGLE_SHEETS_WEBAPP_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify(payload),
-        mode: "no-cors"
-      });
-      document.getElementById('status').textContent = `✅ 記録完了！気温: ${temperature}℃`;
-      form.reset();
-    } catch (error) {
-      document.getElementById('status').textContent = "⚠️ 記録失敗：" + error.message;
+      const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPENWEATHER_API_KEY}&units=metric`);
+      const data = await res.json();
+      temperature = data.main?.temp ?? null;
+    } catch (e) {
+      console.warn("気温取得失敗", e);
     }
-  }, () => {
-    document.getElementById('status').textContent = "⚠️ 位置情報が取得できません";
+
+    const location_sales_count = await countNearbySales(latitude, longitude);
+    const timestamp = new Date().toISOString();
+    const row = [timestamp, product, quantity, amount, gender, latitude, longitude, temperature, location_sales_count];
+
+    // CSVとして保存（ローカル用）
+    const res = await fetch("data/record.csv");
+    let csv = await res.text();
+    csv += "\n" + row.join(",");
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "record.csv"; a.click();
+    URL.revokeObjectURL(url);
+
+    document.getElementById('status').textContent = "✅ 記録完了";
+    form.reset();
+    loadMap(); // 再描画
   });
 });
